@@ -1,4 +1,5 @@
 #%%
+import functools
 import os
 import sys
 
@@ -77,9 +78,33 @@ def rename_table_columns(df, postfix, key):
 
 
 #%%
+def add_two_series(series0 : pd.Series, series1 : pd.Series, fill_value=0) -> pd.Series:
+    return series0.add(series1, fill_value=fill_value)
+
+
+#%%
+def add_columns(table0 : pd.DataFrame, table1 : pd.DataFrame, column='count', new_index='subject', fill_value=0) -> pd.DataFrame:
+
+    assert new_index in table0, (new_index, table0.columns)
+    assert new_index in table1, (new_index, table1.columns)
+
+    t0 = table0.set_index(new_index)
+    t1 = table1.set_index(new_index)
+
+    return pd.DataFrame(add_two_series(t0[column], t1[column], fill_value=fill_value))
+
+
+#%%
+def add_table_columns(table_list : [pd.DataFrame], column='count', new_index='subject', fill_value=0) -> pd.DataFrame:
+
+    series_gen = map(lambda df : df.set_index(new_index)[column], table_list)
+
+    return pd.DataFrame(functools.reduce(lambda x, y : add_two_series(x, y,), series_gen))
+
+
+#%%
 if "__main__" == __name__:
     main(sys.argv[1:])
 
 # More references :
 # https://www.geeksforgeeks.org/python-pandas-split-strings-into-two-list-columns-using-str-split/
-

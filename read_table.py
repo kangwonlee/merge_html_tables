@@ -77,6 +77,16 @@ def rename_table_columns(df, postfix, key):
 
 
 #%%
+def add_two_series(series0 : pd.Series, series1 : pd.Series, fill_value=0) -> pd.Series:
+    return series0.add(series1, fill_value=fill_value)
+
+
+#%%
+def add_columns(table0 : pd.DataFrame, table1 : pd.DataFrame, column='count', fill_value=0):
+    return pd.DataFrame(add_two_series(table0[column], table1[column], fill_value=fill_value))
+
+
+#%%
 if "__main__" == __name__:
     main(sys.argv[1:])
 

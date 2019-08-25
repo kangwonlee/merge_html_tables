@@ -87,14 +87,14 @@ def test_add_series_missing():
 
 
 def test_add_columns_missing():
-    i0 = pd.Series(['a', 'b', 'c', 'd'])
-    i1 = pd.Series(['a', 'b', 'c'])
-    s0 = pd.Series([0, 1, 2, 3], index=i0)
-    s1 = pd.Series([3, 2, 1], index=i1)
+    i0 = ['a', 'b', 'c', 'd']
+    s0 = [0, 1, 2, 3]
+    d0 = pd.DataFrame({'subject':i0, 'count':s0}, columns=['subject', 'count'])
 
-    d0 = pd.DataFrame(s0, index=i0, columns=['count'])
-    d1 = pd.DataFrame(s1, index=i1, columns=['count'])
-    
+    i1 = ['a', 'b', 'c']
+    s1 = [3, 2, 1]
+    d1 = pd.DataFrame({'subject':i1, 'count':s1}, columns=['subject', 'count'])
+
     result_df = read_table.add_columns(d0, d1)
     
     assert len(result_df) == len(s0)

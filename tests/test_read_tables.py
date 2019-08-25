@@ -104,5 +104,30 @@ def test_add_columns_missing():
     assert result_df.equals(expected), result_df
 
 
+def test_add_table_columns():
+    i0 = ['a', 'b', 'c', 'd']
+    s0 = [0, 1, 2, 3]
+    d0 = pd.DataFrame({'subject':i0, 'count':s0}, columns=['subject', 'count'])
+
+    i1 = ['a', 'b', 'c']
+    s1 = [3, 2, 1]
+    d1 = pd.DataFrame({'subject':i1, 'count':s1}, columns=['subject', 'count'])
+
+    i2 = ['a', 'b', 'c', 'd']
+    s2 = [-1, -2, -3, -4]
+    d2 = pd.DataFrame({'subject':i2, 'count':s2}, columns=['subject', 'count'])
+
+    df_list = [d0, d1, d2]
+
+    for df in df_list:
+        assert 'subject' in df.columns.to_list()
+
+    result_df = read_table.add_table_columns(df_list)
+    
+    expected = pd.DataFrame([2.0, 1.0, 0.0, -1.0], index=i0, columns=['count'], dtype=float)
+    
+    assert result_df.equals(expected), result_df
+
+
 if "__main__" == __name__:
     pytest.main()

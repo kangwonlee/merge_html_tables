@@ -82,8 +82,12 @@ def add_two_series(series0 : pd.Series, series1 : pd.Series, fill_value=0) -> pd
 
 
 #%%
-def add_columns(table0 : pd.DataFrame, table1 : pd.DataFrame, column='count', fill_value=0):
-    return pd.DataFrame(add_two_series(table0[column], table1[column], fill_value=fill_value))
+def add_columns(table0 : pd.DataFrame, table1 : pd.DataFrame, column='count', new_index='subject', fill_value=0):
+
+    t0 = table0.set_index(new_index)
+    t1 = table1.set_index(new_index)
+
+    return pd.DataFrame(add_two_series(t0[column], t1[column], fill_value=fill_value))
 
 
 #%%

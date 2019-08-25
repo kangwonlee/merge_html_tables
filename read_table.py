@@ -82,7 +82,7 @@ def add_two_series(series0 : pd.Series, series1 : pd.Series, fill_value=0) -> pd
 
 
 #%%
-def add_columns(table0 : pd.DataFrame, table1 : pd.DataFrame, column='count', new_index='subject', fill_value=0):
+def add_columns(table0 : pd.DataFrame, table1 : pd.DataFrame, column='count', new_index='subject', fill_value=0) -> pd.DataFrame:
 
     assert new_index in table0, (new_index, table0.columns)
     assert new_index in table1, (new_index, table1.columns)
